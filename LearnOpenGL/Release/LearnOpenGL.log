@@ -1,0 +1,43 @@
+﻿  Applications.cpp
+d:\documents\jifaley\code\learnopengl\learnopengl\learnopengl\src\applications.cpp(6): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+  IndexBuffer.cpp
+  Renderer.cpp
+  Shader.cpp
+  Texture.cpp
+  stb_image.cpp
+  VertexArray.cpp
+d:\documents\jifaley\code\learnopengl\learnopengl\learnopengl\src\vertexarray.cpp(1): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+  VertexBuffer.cpp
+  VertexBufferLayout.cpp
+LINK : warning LNK4098: 默认库“LIBCMT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
+  正在生成代码
+  All 710 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+IndexBuffer.obj : warning LNK4049: 已导入本地定义的符号 ___glewDeleteBuffers
+IndexBuffer.obj : warning LNK4049: 已导入本地定义的符号 ___glewGenBuffers
+IndexBuffer.obj : warning LNK4049: 已导入本地定义的符号 ___glewBufferData
+IndexBuffer.obj : warning LNK4049: 已导入本地定义的符号 ___glewBindBuffer
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewUniform4f
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewLinkProgram
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewDeleteShader
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewShaderSource
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewDeleteProgram
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewAttachShader
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewGetUniformLocation
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewUniform1f
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewValidateProgram
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewGetShaderInfoLog
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewUniform1i
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewCreateProgram
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewCreateShader
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewCompileShader
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewGetShaderiv
+Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewUseProgram
+Texture.obj : warning LNK4049: 已导入本地定义的符号 ___glewActiveTexture
+VertexArray.obj : warning LNK4049: 已导入本地定义的符号 ___glewGenVertexArrays
+VertexArray.obj : warning LNK4049: 已导入本地定义的符号 ___glewDeleteVertexArrays
+VertexArray.obj : warning LNK4049: 已导入本地定义的符号 ___glewVertexAttribPointer
+VertexArray.obj : warning LNK4049: 已导入本地定义的符号 ___glewBindVertexArray
+VertexArray.obj : warning LNK4049: 已导入本地定义的符号 ___glewEnableVertexAttribArray
+glew32s.lib(glew.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“glew32s.lib(glew.obj)”或在“D:\Documents\jifaley\code\LearnOpenGL\LearnOpenGL\Release\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+  LearnOpenGL.vcxproj -> D:\Documents\jifaley\code\LearnOpenGL\LearnOpenGL\Release\LearnOpenGL.exe

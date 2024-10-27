@@ -16,6 +16,7 @@
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
+#include "tests/TestClearColor.h"
 
 
 
@@ -65,60 +66,8 @@ int main(void)
 	//添加一个作用域就可以让vb,ib提前析构了
 	{
 
-		float positions[] =
-		{
-			-50.0f, -50.0f,  0.0f, 0.0f, //0
-			 50.0f, -50.0f,  1.0f, 0.0f,//1
-			 50.0f,  50.0f,  1.0f, 1.0f,//2
-			-50.0f,  50.0f,  0.0f, 1.0f//3
-		};
-		//一行四个数，前两个位置坐标，后两个纹理坐标
-
-
-
-		/* 索引缓冲区所需索引数组 */
-		unsigned int indices[] = {
-			0, 1, 2,
-			2, 3, 0
-		};
-
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
-
-		VertexArray va;
-		VertexBuffer vb(positions, 4 * 4 * sizeof(float)); //4个顶点 * 每个顶点4个float
-		
-		VertexBufferLayout layout;
-		layout.Push<float>(2);
-		layout.Push<float>(2);
-		va.AddBuffer(vb,layout);
-
-		
-
-		IndexBuffer ib(indices, 6);
-
-		glm::mat4 proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-		//投影后得到了更小的logo
-		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-		//值是负的，因为移动相机实际上相当于反向移动物体。在这里我们只能移动物体
-
-		Shader shader("res/shaders/Basic.shader");
-		shader.Bind();
-		shader.SetUniform4f("u_Color", 0.2f, 0.3f, 0.8f, 1.0f);
-		
-
-		Texture texture("res/textures/ChernoLogo.png");
-		texture.Bind();
-		shader.SetUniform1i("u_Texture", 0); //纹理插槽0
-
-
-
-		va.UnBind();
-		shader.UnBind();
-		vb.UnBind();
-		ib.UnBind();
-		
 
 		Renderer renderer;
 
@@ -126,11 +75,7 @@ int main(void)
 		ImGui_ImplGlfwGL3_Init(window, true);
 		ImGui::StyleColorsDark();
 
-		glm::vec3 translationA(200, 200, 0);
-		glm::vec3 translationB(400, 200, 0);
-
-		float r = 0.0f;
-		float increment = 0.05f;
+		test::TestClearColor test;
 
 
 		/* Loop until the user closes the window */ //主循环
@@ -139,41 +84,12 @@ int main(void)
 			/* Render here */
 			renderer.Clear();
 
+			test.OnUpdate(0.0f);
+			test.OnRender();
+
 			ImGui_ImplGlfwGL3_NewFrame(); //在任何imgui调用之前需要newframe
 
-			
-
-			{
-				glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA);
-				glm::mat4 mvp = proj * view * model;
-				shader.Bind();
-				shader.SetUniformMat4f("u_MVP", mvp);
-				renderer.Draw(va, ib, shader); //va,ib在Draw()函数中自带了Bind()，因此不在这里再显式绑定了
-			}
-
-			{
-				glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB);
-				glm::mat4 mvp = proj * view * model;
-				shader.Bind();
-				shader.SetUniformMat4f("u_MVP", mvp);
-				renderer.Draw(va, ib, shader);
-			}
-			
-			//注意！这些int都需要是无符号类型！
-			if (r > 1.0f)
-				increment = -0.05f;
-			if (r < 0.0f)
-				increment = 0.05f;
-			r += increment;
-
-
-			{
-				ImGui::SliderFloat3("Translation A", &translationA.x, 0.0f, 960.0f); //这里的float3提供第一个float地址后会自动绑定后面的两个float
-				ImGui::SliderFloat3("Translation B", &translationB.x, 0.0f, 960.0f);
-				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-			}
-
-
+			test.OnImGuiRender();
 			ImGui::Render();
 			ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 

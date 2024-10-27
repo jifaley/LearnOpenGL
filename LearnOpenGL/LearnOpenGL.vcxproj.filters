@@ -46,6 +46,9 @@
     <Filter Include="src\vendor\glm\simd">
       <UniqueIdentifier>{2257978a-5043-4dd0-abd2-6e30e3ae052b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\vendor\imgui">
+      <UniqueIdentifier>{3f91d2a6-5e15-4e79-85d9-7892a1654c44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Applications.cpp">
@@ -77,6 +80,18 @@
     </ClCompile>
     <ClCompile Include="src\vendor\glm\detail\glm.cpp">
       <Filter>src\vendor\glm\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\imgui\imgui.cpp">
+      <Filter>src\vendor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\imgui\imgui_demo.cpp">
+      <Filter>src\vendor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\imgui\imgui_draw.cpp">
+      <Filter>src\vendor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\imgui\imgui_impl_glfw_gl3.cpp">
+      <Filter>src\vendor\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -538,6 +553,27 @@
     </ClInclude>
     <ClInclude Include="src\vendor\glm\simd\vector_relational.h">
       <Filter>src\vendor\glm\simd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\imgui\imconfig.h">
+      <Filter>src\vendor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\imgui\imgui.h">
+      <Filter>src\vendor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\imgui\imgui_impl_glfw_gl3.h">
+      <Filter>src\vendor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\imgui\imgui_internal.h">
+      <Filter>src\vendor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\imgui\stb_rect_pack.h">
+      <Filter>src\vendor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\imgui\stb_textedit.h">
+      <Filter>src\vendor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\imgui\stb_truetype.h">
+      <Filter>src\vendor\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

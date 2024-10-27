@@ -2,9 +2,9 @@
 d:\documents\jifaley\code\learnopengl\learnopengl\learnopengl\src\applications.cpp(6): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
 LINK : warning LNK4098: 默认库“LIBCMT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
   正在生成代码
-  3 of 740 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+  380 of 1621 functions (23.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    54 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
 IndexBuffer.obj : warning LNK4049: 已导入本地定义的符号 ___glewDeleteBuffers
 IndexBuffer.obj : warning LNK4049: 已导入本地定义的符号 ___glewGenBuffers
@@ -28,10 +28,16 @@ Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewCompileShade
 Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewGetShaderiv
 Shader.obj : warning LNK4049: 已导入本地定义的符号 ___glewUseProgram
 Texture.obj : warning LNK4049: 已导入本地定义的符号 ___glewActiveTexture
-VertexArray.obj : warning LNK4049: 已导入本地定义的符号 ___glewGenVertexArrays
-VertexArray.obj : warning LNK4049: 已导入本地定义的符号 ___glewDeleteVertexArrays
-VertexArray.obj : warning LNK4049: 已导入本地定义的符号 ___glewVertexAttribPointer
-VertexArray.obj : warning LNK4049: 已导入本地定义的符号 ___glewBindVertexArray
-VertexArray.obj : warning LNK4049: 已导入本地定义的符号 ___glewEnableVertexAttribArray
+imgui_impl_glfw_gl3.obj : warning LNK4049: 已导入本地定义的符号 ___glewDetachShader
+imgui_impl_glfw_gl3.obj : warning LNK4049: 已导入本地定义的符号 ___glewBlendEquationSeparate
+imgui_impl_glfw_gl3.obj : warning LNK4049: 已导入本地定义的符号 ___glewGenVertexArrays
+imgui_impl_glfw_gl3.obj : warning LNK4049: 已导入本地定义的符号 ___glewBlendEquation
+imgui_impl_glfw_gl3.obj : warning LNK4049: 已导入本地定义的符号 ___glewBlendFuncSeparate
+imgui_impl_glfw_gl3.obj : warning LNK4049: 已导入本地定义的符号 ___glewDeleteVertexArrays
+imgui_impl_glfw_gl3.obj : warning LNK4049: 已导入本地定义的符号 ___glewGetAttribLocation
+imgui_impl_glfw_gl3.obj : warning LNK4049: 已导入本地定义的符号 ___glewVertexAttribPointer
+imgui_impl_glfw_gl3.obj : warning LNK4049: 已导入本地定义的符号 ___glewBindSampler
+imgui_impl_glfw_gl3.obj : warning LNK4049: 已导入本地定义的符号 ___glewBindVertexArray
+imgui_impl_glfw_gl3.obj : warning LNK4049: 已导入本地定义的符号 ___glewEnableVertexAttribArray
 glew32s.lib(glew.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“glew32s.lib(glew.obj)”或在“D:\Documents\jifaley\code\LearnOpenGL\LearnOpenGL\Release\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
   LearnOpenGL.vcxproj -> D:\Documents\jifaley\code\LearnOpenGL\LearnOpenGL\Release\LearnOpenGL.exe

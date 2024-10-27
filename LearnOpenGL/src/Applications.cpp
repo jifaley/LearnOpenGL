@@ -14,6 +14,9 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw_gl3.h"
+
 
 
 
@@ -100,16 +103,10 @@ int main(void)
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
 		//值是负的，因为移动相机实际上相当于反向移动物体。在这里我们只能移动物体
 
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
-
-		glm::mat4 mvp = proj * view * model;
-
-
-
 		Shader shader("res/shaders/Basic.shader");
 		shader.Bind();
 		shader.SetUniform4f("u_Color", 0.2f, 0.3f, 0.8f, 1.0f);
-		shader.SetUniformMat4f("u_MVP", mvp);
+		
 
 		Texture texture("res/textures/ChernoLogo.png");
 		texture.Bind();
@@ -125,8 +122,11 @@ int main(void)
 
 		Renderer renderer;
 
-	
+		ImGui::CreateContext();
+		ImGui_ImplGlfwGL3_Init(window, true);
+		ImGui::StyleColorsDark();
 
+		glm::vec3 translation(200, 200, 0);
 
 		float r = 0.0f;
 		float increment = 0.05f;
@@ -138,8 +138,17 @@ int main(void)
 			/* Render here */
 			renderer.Clear();
 
+			ImGui_ImplGlfwGL3_NewFrame(); //在任何imgui调用之前需要newframe
+
+			glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
+			glm::mat4 mvp = proj * view * model;
+
+			
+
+
 			shader.Bind();
 			shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
+			shader.SetUniformMat4f("u_MVP", mvp);
 
 			va.Bind();
 			ib.Bind();
@@ -154,6 +163,16 @@ int main(void)
 				increment = 0.05f;
 			r += increment;
 
+
+			{
+				ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 960.0f); 
+				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			}
+
+
+			ImGui::Render();
+			ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+
 			/* Swap front and back buffers */
 			glfwSwapBuffers(window);
 
@@ -162,6 +181,8 @@ int main(void)
 		}
 	}
 
+	ImGui_ImplGlfwGL3_Shutdown();
+	ImGui::DestroyContext();
 
 	glfwTerminate();
 	return 0;

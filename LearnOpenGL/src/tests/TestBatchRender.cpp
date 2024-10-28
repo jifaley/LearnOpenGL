@@ -34,49 +34,67 @@ namespace test
 		Vec4 Color;
 	};
 
-	static std::array<Vertex, 4> CreateQuad(float x, float y, float textureID)
+	static Vertex* CreateQuad(Vertex* target, float x, float y, float textureID)
 	{
 		float size = 50.0f;
 
-		Vertex v0;
-		v0.Position = { x, y};
-		v0.Color = { 0.18f, 0.6f, 0.96f, 1.0f };
-		v0.TexCoords = { 0.0f, 0.0f };
-		v0.TexId = textureID;
 
-		Vertex v1;
-		v1.Position = { x + size, y };
-		v1.Color = { 0.18f, 0.6f, 0.96f, 1.0f };
-		v1.TexCoords = { 1.0f, 0.0f };
-		v1.TexId = textureID;
+		target->Position = { x, y};
+		target->Color = { 0.18f, 0.6f, 0.96f, 1.0f };
+		target->TexCoords = { 0.0f, 0.0f };
+		target->TexId = textureID;
+		target++;
+
+
+		target->Position = { x + size, y };
+		target->Color = { 0.18f, 0.6f, 0.96f, 1.0f };
+		target->TexCoords = { 1.0f, 0.0f };
+		target->TexId = textureID;
+		target++;
 		  
-		Vertex v2;
-		v2.Position = { x + size, y + size };
-		v2.Color = { 0.18f, 0.6f, 0.96f, 1.0f };
-		v2.TexCoords = { 1.0f, 1.0f };
-		v2.TexId = textureID;
+		target->Position = { x + size, y + size };
+		target->Color = { 0.18f, 0.6f, 0.96f, 1.0f };
+		target->TexCoords = { 1.0f, 1.0f };
+		target->TexId = textureID;
+		target++;
 
-		Vertex v3;
-		v3.Position = { x, y + size };
-		v3.Color = { 0.18f, 0.6f, 0.96f, 1.0f };
-		v3.TexCoords = { 0.0f, 1.0f };
-		v3.TexId = textureID;
-		return { v0, v1, v2, v3 };
+		target->Position = { x, y + size };
+		target->Color = { 0.18f, 0.6f, 0.96f, 1.0f };
+		target->TexCoords = { 0.0f, 1.0f };
+		target->TexId = textureID;
+		target++;
+
+		return target;
 	}
-
+	const size_t MaxQuadCount = 1000;
+	const size_t MaxVertexCount = MaxQuadCount * 4;
+	const size_t MaxIndexCount = MaxQuadCount * 6;
 
 	TestBatchRender::TestBatchRender()
 		:m_Translation(200, 200, 0)
 		
 	{
 		
-
+		
 
 		/* 索引缓冲区所需索引数组 */
-		unsigned int indices[] = {
+	/*	unsigned int indices[] = {
 			0, 1, 2, 2, 3, 0,
 			4, 5, 6, 6, 7, 4
-		};
+		};*/
+		unsigned int indices[MaxIndexCount];
+		unsigned int offset = 0;
+		for (int i = 0; i < MaxIndexCount; i += 6)
+		{
+			indices[i + 0] = 0 + offset;
+			indices[i + 1] = 1 + offset;
+			indices[i + 2] = 2 + offset;
+			indices[i + 3] = 2 + offset;
+			indices[i + 4] = 3 + offset;
+			indices[i + 5] = 0 + offset;
+			offset += 4;
+		}
+
 
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -84,7 +102,7 @@ namespace test
 		m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
 		m_VAO = std::make_unique<VertexArray>();
 
-		m_VertexBuffer = std::make_unique<VertexBuffer>(nullptr, 1000 * sizeof(Vertex), true); //8个顶点 * 每个顶点8个float
+		m_VertexBuffer = std::make_unique<VertexBuffer>(nullptr, MaxVertexCount * sizeof(Vertex), true); //8个顶点 * 每个顶点8个float
 
 		VertexBufferLayout layout;
 		layout.Push<float>(2);
@@ -92,7 +110,7 @@ namespace test
 		layout.Push<float>(2);
 		layout.Push<float>(4);
 		m_VAO->AddBuffer(*m_VertexBuffer, layout);
-		m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 12);
+		m_IndexBuffer = std::make_unique<IndexBuffer>(indices, MaxIndexCount);
 
 		m_Proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
 		//投影后得到了更小的logo
@@ -121,31 +139,23 @@ namespace test
 		GLCall(glClearColor(0.0f, 0.0f, 0.0f, 0.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-		//float positions[] =
-		//{
-		//	-100.0f,  -100.0f,  0.0f,     0.0f, 0.0f,    0.18f, 0.6f, 0.96f, 1.0f,//0
-		//	-50.0f,   -100.0f,  0.0f,     1.0f, 0.0f,    0.18f, 0.6f, 0.96f, 1.0f,//1
-		//	-50.0f,   -50.0f,   0.0f,     1.0f, 1.0f,    0.18f, 0.6f, 0.96f, 1.0f,//2
-		//	-100.0f,  -50.0f,   0.0f,     0.0f, 1.0f,    0.18f, 0.6f, 0.96f, 1.0f,//3
+		unsigned int indexCount = 0;
 
-		//	 50.0f,   50.0f,    1.0f,     0.0f, 0.0f,     1.0f, 0.93f, 0.24f, 1.0f,//4
-		//	 100.0f,  50.0f,    1.0f,     1.0f, 0.0f,     1.0f, 0.93f, 0.24f, 1.0f,//5
-		//	 100.0f,  100.0f,   1.0f,     1.0f, 1.0f,     1.0f, 0.93f, 0.24f, 1.0f,//6
-		//	 50.0f,   100.0f,   1.0f,     0.0f, 1.0f,     1.0f, 0.93f, 0.24f, 1.0f//7
-		//};
+		std::array<Vertex, 1000> vertices;
+		Vertex* buffer = vertices.data();
+		for (int y = 0; y < 5; y++)
+		{
+			for (int x = 0; x < 5; x++)
+			{
+				buffer = CreateQuad(buffer, x * 50, y * 50, (x + y) % 2);
+				indexCount += 6;
+			}
+		}
 
-		auto q0 = CreateQuad(m_QuadPosition1[0], m_QuadPosition1[1], 0.0f);
-		auto q1 = CreateQuad(m_QuadPosition2[0], m_QuadPosition2[1], 1.0f);
+		buffer = CreateQuad(buffer, m_QuadPosition1[0], m_QuadPosition1[1], 0.0f);
+		indexCount += 6;
 
-		Vertex vertices[8];
-		memcpy(vertices, q0.data(), q0.size() * sizeof(Vertex));
-		memcpy(vertices + q0.size(), q1.data(), q1.size() * sizeof(Vertex));
-
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-
-		//glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(positions), positions);
-		//前1，2位置坐标，第3个纹理序号，4，5两个纹理坐标， 6-9 颜色
-
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices.data());
 
 		Renderer renderer;
 
@@ -157,7 +167,9 @@ namespace test
 			glm::mat4 mvp = m_Proj * m_View * model;
 			m_Shader->Bind();
 			m_Shader->SetUniformMat4f("u_MVP", mvp);
-			renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader); //va,ib在Draw()函数中自带了Bind()，因此不在这里再显式绑定了
+			//renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader); //va,ib在Draw()函数中自带了Bind()，因此不在这里再显式绑定了
+			renderer.DrawWithIndexCount(*m_VAO, *m_IndexBuffer, *m_Shader, indexCount);
+			//调用新的Draw()函数，具体渲染数字与传入数字有关
 		}
 
 	}

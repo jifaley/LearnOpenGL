@@ -14,5 +14,6 @@ public:
 	Renderer();
 	~Renderer();
 	void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+	void DrawWithIndexCount(const VertexArray & va, const IndexBuffer & ib, const Shader & shader, int indexCount) const;
 	void Clear() const;
 };

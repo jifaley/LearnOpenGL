@@ -15,19 +15,19 @@ namespace test
 	{
 		float positions[] =
 		{
-			-100.0f,  -100.0f,  0.0f, 0.0f,    0.18f, 0.6f, 0.96f, 1.0f,//0
-			-50.0f,   -100.0f,  1.0f, 0.0f,    0.18f, 0.6f, 0.96f, 1.0f,//1
-			-50.0f,   -50.0f,   1.0f, 1.0f,    0.18f, 0.6f, 0.96f, 1.0f,//2
-			-100.0f,  -50.0f,   0.0f, 1.0f,    0.18f, 0.6f, 0.96f, 1.0f,//3
+			-100.0f,  -100.0f,  0.0f,     0.0f, 0.0f,    0.18f, 0.6f, 0.96f, 1.0f,//0
+			-50.0f,   -100.0f,  0.0f,     1.0f, 0.0f,    0.18f, 0.6f, 0.96f, 1.0f,//1
+			-50.0f,   -50.0f,   0.0f,     1.0f, 1.0f,    0.18f, 0.6f, 0.96f, 1.0f,//2
+			-100.0f,  -50.0f,   0.0f,     0.0f, 1.0f,    0.18f, 0.6f, 0.96f, 1.0f,//3
 
-			 50.0f,   50.0f,   0.0f, 0.0f,     1.0f, 0.93f, 0.24f, 1.0f,//4
-			 100.0f,  50.0f,   1.0f, 0.0f,     1.0f, 0.93f, 0.24f, 1.0f,//5
-			 100.0f,  100.0f,  1.0f, 1.0f,     1.0f, 0.93f, 0.24f, 1.0f,//6
-			 50.0f,   100.0f,  0.0f, 1.0f,     1.0f, 0.93f, 0.24f, 1.0f//7
+			 50.0f,   50.0f,    1.0f,     0.0f, 0.0f,     1.0f, 0.93f, 0.24f, 1.0f,//4
+			 100.0f,  50.0f,    1.0f,     1.0f, 0.0f,     1.0f, 0.93f, 0.24f, 1.0f,//5
+			 100.0f,  100.0f,   1.0f,     1.0f, 1.0f,     1.0f, 0.93f, 0.24f, 1.0f,//6
+			 50.0f,   100.0f,   1.0f,     0.0f, 1.0f,     1.0f, 0.93f, 0.24f, 1.0f//7
 
 
 		};
-		//一行四个数，前两个位置坐标，后两个纹理坐标
+		//前1，2位置坐标，第3个纹理序号，4，5两个纹理坐标， 6-9 颜色
 
 
 
@@ -43,10 +43,11 @@ namespace test
 		m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
 		m_VAO = std::make_unique<VertexArray>();
 
-		m_VertexBuffer = std::make_unique<VertexBuffer>(positions, 8 * 8 * sizeof(float)); //8个顶点 * 每个顶点8个float
+		m_VertexBuffer = std::make_unique<VertexBuffer>(positions, 9 * 8 * sizeof(float)); //8个顶点 * 每个顶点8个float
 
 		VertexBufferLayout layout;
 		layout.Push<float>(2);
+		layout.Push<float>(1);
 		layout.Push<float>(2);
 		layout.Push<float>(4);
 		m_VAO->AddBuffer(*m_VertexBuffer, layout);
@@ -60,8 +61,13 @@ namespace test
 		m_Shader->Bind();
 		m_Shader->SetUniform4f("u_Color", 0.2f, 0.3f, 0.8f, 1.0f);
 
-		m_Texture = std::make_unique<Texture>("res/textures/ChernoLogo.png");
-		m_Shader->SetUniform1i("u_Texture", 0); //纹理插槽0
+		m_Texture1 = std::make_unique<Texture>("res/textures/ChernoLogo.png");
+		m_Texture2 = std::make_unique<Texture>("res/textures/HazelLogo.png");
+
+		std::vector<int> textures{ 0,1 };
+		m_Shader->SetUniform1iv("u_Textures", textures);
+		//Use SetUniform1iv ! Not SetUniform2i!
+
 	}
 	TestBatchRender::~TestBatchRender()
 	{
@@ -76,7 +82,8 @@ namespace test
 
 		Renderer renderer;
 
-		m_Texture->Bind();
+		m_Texture1->Bind(0);
+		m_Texture2->Bind(1);
 
 		{
 			glm::mat4 model = glm::translate(glm::mat4(1.0f), m_Translation);

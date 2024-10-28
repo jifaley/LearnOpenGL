@@ -13,6 +13,16 @@ VertexBuffer::VertexBuffer(const void * data, unsigned int size)
 	GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
 }
 
+VertexBuffer::VertexBuffer(const void * data, unsigned int size, bool isDynamic)
+{
+	if (isDynamic)
+	{
+		GLCall(glGenBuffers(1, &m_RenderId)); //1ºÅ¾ä±ú
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_RenderId));
+		GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW));
+	}
+}
+
 VertexBuffer::~VertexBuffer()
 {
 	GLCall(glDeleteBuffers(1, &m_RenderId));

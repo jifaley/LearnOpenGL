@@ -30,6 +30,8 @@ namespace test
 		std::unique_ptr<Texture> m_Texture2;
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 
+		float m_QuadPosition1[2]{ -50.0f, -50.0f };
+		float m_QuadPosition2[2]{ 50.0f, 50.0f };
 		glm::vec3 m_Translation;
 
 		glm::mat4 m_Proj, m_View;

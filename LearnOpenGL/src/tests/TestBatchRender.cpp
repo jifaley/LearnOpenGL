@@ -15,15 +15,15 @@ namespace test
 	{
 		float positions[] =
 		{
-			-100.0f,  -100.0f,  0.0f, 0.0f,//0
-			-50.0f,   -100.0f,  1.0f, 0.0f,//1
-			-50.0f,   -50.0f,   1.0f, 1.0f,//2
-			-100.0f,  -50.0f,   0.0f, 1.0f,//3
+			-100.0f,  -100.0f,  0.0f, 0.0f,    0.18f, 0.6f, 0.96f, 1.0f,//0
+			-50.0f,   -100.0f,  1.0f, 0.0f,    0.18f, 0.6f, 0.96f, 1.0f,//1
+			-50.0f,   -50.0f,   1.0f, 1.0f,    0.18f, 0.6f, 0.96f, 1.0f,//2
+			-100.0f,  -50.0f,   0.0f, 1.0f,    0.18f, 0.6f, 0.96f, 1.0f,//3
 
-			 50.0f,   50.0f,   0.0f, 0.0f,//4
-			 100.0f,  50.0f,   1.0f, 0.0f,//5
-			 100.0f,  100.0f,  1.0f, 1.0f,//6
-			 50.0f,   100.0f,  0.0f, 1.0f //7
+			 50.0f,   50.0f,   0.0f, 0.0f,     1.0f, 0.93f, 0.24f, 1.0f,//4
+			 100.0f,  50.0f,   1.0f, 0.0f,     1.0f, 0.93f, 0.24f, 1.0f,//5
+			 100.0f,  100.0f,  1.0f, 1.0f,     1.0f, 0.93f, 0.24f, 1.0f,//6
+			 50.0f,   100.0f,  0.0f, 1.0f,     1.0f, 0.93f, 0.24f, 1.0f//7
 
 
 		};
@@ -43,11 +43,12 @@ namespace test
 		m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
 		m_VAO = std::make_unique<VertexArray>();
 
-		m_VertexBuffer = std::make_unique<VertexBuffer>(positions, 8 * 4 * sizeof(float)); //4个顶点 * 每个顶点4个float
+		m_VertexBuffer = std::make_unique<VertexBuffer>(positions, 8 * 8 * sizeof(float)); //8个顶点 * 每个顶点8个float
 
 		VertexBufferLayout layout;
 		layout.Push<float>(2);
 		layout.Push<float>(2);
+		layout.Push<float>(4);
 		m_VAO->AddBuffer(*m_VertexBuffer, layout);
 		m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 12);
 

@@ -14,7 +14,7 @@ class Shader
 private:
 	std::string m_FilePath;
 	unsigned int m_RendererId;
-	std::unordered_map<std::string, int> m_LocationCache; //为了不让每次修改变量的时候查找uniform位置做的缓存
+	mutable std::unordered_map<std::string, int> m_LocationCache; //为了不让每次修改变量的时候查找uniform位置做的缓存
 	
 public:
 	Shader(const std::string& filepath);
@@ -38,5 +38,5 @@ private:
 
 	unsigned int CreateShader(const std::string & vertexShader, const std::string & fragmentShader);
 
-	int GetUniformLocation(const std::string& name);
+	int GetUniformLocation(const std::string& name) const;
 };

@@ -18,6 +18,7 @@
 #include "imgui/imgui_impl_glfw_gl3.h"
 #include "tests/TestClearColor.h"
 #include "tests/TestTexture2D.h"
+#include "tests/TestBatchRender.h"
 
 
 
@@ -82,6 +83,7 @@ int main(void)
 
 		testMenu->RegisterTest<test::TestClearColor>("Clear Color");
 		testMenu->RegisterTest<test::TestTexture2D>("Texture 2D");
+		testMenu->RegisterTest<test::TestBatchRender>("Batch Render");
 
 
 		/* Loop until the user closes the window */ //Ö÷Ñ­»·
